@@ -5,6 +5,7 @@ plugins {
 
 repositories {
     gradlePluginPortal()
+    mavenCentral()
 }
 
 dependencies {
@@ -48,7 +49,7 @@ publishing {
         val user = properties["fad_username"]?.toString() ?: System.getenv("fad_username")
         val pass = properties["fad_password"]?.toString() ?: System.getenv("fad_password")
 
-        maven("https://repo.preva1l.info/releases/") {
+        maven("https://reposilite.slne.dev/releases/") {
             name = "FinallyADecent"
             if (user != null && pass != null) {
                 credentials {

@@ -44,7 +44,7 @@ fun RepositoryHandler.finallyADecent(
     dev: Boolean = false,
     authenticated: Boolean = false
 ) {
-    maven("https://repo.preva1l.info/${if (dev) "development" else "releases"}/") {
+    maven("https://reposilite.slne.dev/${if (dev) "development" else "releases"}/") {
         this@maven.name = name
         if (authenticated) {
             credentials(PasswordCredentials::class)

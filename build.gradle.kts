@@ -14,8 +14,9 @@ allprojects {
     group = "info.preva1l.trashcan"
     version = "1.2.3"
     repositories {
-        if (devMode) configureFinallyADecentRepository(devMode)
-        configureFinallyADecentRepository()
+        mavenCentral()
+        maven("https://repo.sunnyinfra.cloud/public")
+        configureSlneReleasesRepository(credentials = false)
     }
 }
 
@@ -74,7 +75,7 @@ subprojects {
 
     publishing {
         repositories {
-            configureFinallyADecentRepository(dev = devMode)
+            configureSlneReleasesRepository(credentials = true)
         }
         publications {
             register<MavenPublication>("mavenJava") {
@@ -86,13 +87,17 @@ subprojects {
     }
 }
 
-fun RepositoryHandler.configureFinallyADecentRepository(dev: Boolean = false) {
-    val user = properties["fad_username"]?.toString() ?: System.getenv("fad_username")
-    val pass = properties["fad_password"]?.toString() ?: System.getenv("fad_password")
+fun RepositoryHandler.configureSlneReleasesRepository(credentials: Boolean = true)
+{
+    maven("https://reposilite.slne.dev/releases/") {
+        name = "slne-repository-releases"
 
-    maven("https://repo.preva1l.info/${if (dev) "development" else "releases"}/") {
-        name = "FinallyADecent"
-        if (user != null && pass != null) {
+        if (credentials) {
+            val user: String? = properties["slne_releases_repo_username"]?.toString()
+                ?: System.getenv("SLNE_RELEASES_REPO_USERNAME")
+            val pass: String? = properties["slne_releases_repo_password"]?.toString()
+                ?: System.getenv("SLNE_RELEASES_REPO_PASSWORD")
+
             credentials {
                 username = user
                 password = pass

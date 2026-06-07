@@ -31,7 +31,7 @@ abstract class TrashcanExtension(
         dev: Boolean = false,
         authenticated: Boolean = false
     ) {
-        repositories.maven("https://repo.preva1l.info/${if (dev) "development" else "releases"}/") {
+        repositories.maven("https://reposilite.slne.dev/${if (dev) "development" else "releases"}/") {
             this@maven.name = name
             if (authenticated) {
                 credentials(PasswordCredentials::class)
